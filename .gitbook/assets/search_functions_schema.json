@@ -1,0 +1,524 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": false,
+    "id": "queryNode",
+    "maxProperties": 1,
+    "minProperties": 1,
+    "properties": {
+        "$and": {
+            "description": "multi-query AND operator, '$and':[{mulitple query nodes}]",
+            "items": {
+                "$ref": "#"
+            },
+            "minItems": 1,
+            "type": "array"
+        },
+        "$contains": {
+            "description": "fuzzy/parial match '$contains':['fieldName', 'value']",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$contains_all": {
+            "description": "fuzzy match all values of a set of strings '$contains_all':['fieldName', ['value1', 'value2', ...]]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "boolean"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$contains_any": {
+            "description": "fuzzy match any of a set of strings '$contains_any':['fieldName', ['value1', 'value2', ...]]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "boolean"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$contains_none": {
+            "description": "fuzzy match no values of a set '$contains_none':['fieldName', [<value1>, <value2>, ...]]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "boolean"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$eq": {
+            "description": "exact equality match '$eq':['fieldName', <value>]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$eq_all": {
+            "description": "exact match all values of a set '$eq_all':['fieldName', [<value1>, <value2>, ...]]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "boolean"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$eq_any": {
+            "description": "exact match any of a set '$eq_any':['fieldName', [<value1>, <value2>, ...]]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "boolean"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$eq_none": {
+            "description": "exact match no values of a set '$eq_none':['fieldName', [<value1>, <value2>, ...]]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "boolean"
+                        },
+                        "type": "array"
+                    },
+                    {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$gt": {
+            "description": "greater than '$gt':['fieldName', <value>]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$gte": {
+            "description": "greater than or equal '$gte':['fieldName', <value>]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$join": {
+            "description": "join any query to another query '$join':[<charTypeID>, 'fromFieldName', 'toFieldName', { query node for <charTypeID>}]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "integer"
+                    },
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#"
+                    }
+                ]
+            },
+            "maxItems": 4,
+            "minItems": 4,
+            "type": "array"
+        },
+        "$join_child_entity": {
+            "description": "match query against related child entities '$join_child_entity':[<childCharTypeID>, {single query node  for childCharType}]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "integer"
+                    },
+                    {
+                        "$ref": "#"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$join_child_rel": {
+            "description": "match query against related child entities '$join_child_rel':[{single query node for child Relationship}]",
+            "items": {
+                "$ref": "#"
+            },
+            "maxItems": 1,
+            "minItems": 1,
+            "type": "array"
+        },
+        "$join_parent_entity": {
+            "description": "match query against related parent entities '$join_parent_entity':[<parentCharTypeID>, {single query node for parentCharType}]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "integer"
+                    },
+                    {
+                        "$ref": "#"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$join_parent_rel": {
+            "description": "match query against related parent relationships '$join_parent_rel':[{single query node for parent Relationship}]",
+            "items": {
+                "$ref": "#"
+            },
+            "maxItems": 1,
+            "minItems": 1,
+            "type": "array"
+        },
+        "$lt": {
+            "description": "less than '$lt':['fieldName', <value>]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$lte": {
+            "description": "less than or equal '$lte':['fieldName', <value>]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$ncontains": {
+            "description": "negated fuzzy/parial match '$ncontains':['fieldName', 'value']",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$neq": {
+            "description": "negated exact equality match '$neq':['fieldName', <value>]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        },
+        "$not": {
+            "description": "single-query NOT operator, '$not':[{single query node}]",
+            "items": {
+                "$ref": "#"
+            },
+            "maxItems": 1,
+            "minItems": 1,
+            "type": "array"
+        },
+        "$or": {
+            "description": "multi-query OR operator, '$or':[{mulitple query nodes}]",
+            "items": {
+                "$ref": "#"
+            },
+            "minItems": 1,
+            "type": "array"
+        },
+        "$range": {
+            "description": "Range query '$range':['fieldName', <lowerValue>, <upperValue>, <opt bool lowerInclusive>, <opt bool upperInclusive>]",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
+            },
+            "maxItems": 5,
+            "minItems": 3,
+            "type": "array"
+        }
+    },
+    "type": "object"
+}

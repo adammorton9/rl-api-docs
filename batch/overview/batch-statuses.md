@@ -1,0 +1,3 @@
+# Batch statuses
+
+<table><thead><tr><th width="164">Status</th><th width="441.3333333333333">Description</th><th>Is Final Status</th></tr></thead><tbody><tr><td><code>Created</code></td><td>Batch created.</td><td>No</td></tr><tr><td><code>InProgress</code></td><td>Batch is processing.</td><td>No</td></tr><tr><td><code>Error</code></td><td>Batch resulted in an error.</td><td>Yes</td></tr><tr><td><code>Cancelled</code></td><td>Batch was cancelled. See <code>cancelIfRecordFails</code> batch option.</td><td>Yes</td></tr><tr><td><code>Complete</code></td><td>Batch completed successfully.</td><td>Yes</td></tr></tbody></table>
