@@ -15,24 +15,28 @@ This endpoint returns the availability for the specified catalog-items for the g
 
 #### Request Body
 
-| Name                                   | Type    | Description                                                                      |
-| -------------------------------------- | ------- | -------------------------------------------------------------------------------- |
-| dim1<mark style="color:red;">\*</mark> | array   | Array of type `INTEGER` of desired dim1 values                                   |
-| dim2<mark style="color:red;">\*</mark> | array   | Array of type `INTEGER` of desired dim2 values                                   |
-| dim3<mark style="color:red;">\*</mark> | array   | Array of type `INTEGER` of desired dim3 values                                   |
-| dim4<mark style="color:red;">\*</mark> | array   | Array of type `INTEGER` of desired dim4 values                                   |
-| windowStart                            | string  | yyyy-mm-dd format                                                                |
-| windowEnd                              | string  | yyyy-mm-dd format                                                                |
-| matchType                              | string  | CoverEntire, OverlapPart, StartWithin, EndWithin                                 |
-| isExact                                | boolean | True for if the window dates should match exactly, False for flexible            |
-| isExclusive                            | boolean | True for Exclusive, False for Non-Exclusive, null for no value                   |
-| start                                  | string  | Record count start (0-based index)                                               |
-| rows                                   | integer | Page result count (25 recommended, hard cap of 100)                              |
-| characteristics                        | object  | Filter by specific LOV characteristic values on the catalog-item.                |
-| templateIds                            | array   | Array of type `INTEGER` of template IDs to filter by                             |
-| statusIds                              | array   | Array of type `INTEGER` of status IDs to filter by                               |
-| rightTemplateIds                       | array   | Array of type `INTEGER` of template IDs of the associated rightsets to filter by |
-| includeRecalcStatus                    | boolean | If true, a recalcStatus will be returned with the results. Defaults to false.    |
+| Name                                   | Type    | Description                                                                                                                                             |
+| -------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| dim1<mark style="color:red;">\*</mark> | array   | Array of type `INTEGER` of desired dim1 values                                                                                                          |
+| dim2<mark style="color:red;">\*</mark> | array   | Array of type `INTEGER` of desired dim2 values                                                                                                          |
+| dim3<mark style="color:red;">\*</mark> | array   | Array of type `INTEGER` of desired dim3 values                                                                                                          |
+| dim4<mark style="color:red;">\*</mark> | array   | Array of type `INTEGER` of desired dim4 values                                                                                                          |
+| windowStart                            | string  | yyyy-mm-dd format                                                                                                                                       |
+| windowEnd                              | string  | yyyy-mm-dd format                                                                                                                                       |
+| matchType                              | string  | CoverEntire, OverlapPart, StartWithin, EndWithin                                                                                                        |
+| isExact                                | boolean | True for if the window dates should match exactly, False for flexible                                                                                   |
+| isExclusive                            | boolean | True for Exclusive, False for Non-Exclusive, null for no value                                                                                          |
+| start                                  | string  | Record count start (0-based index)                                                                                                                      |
+| rows                                   | integer | Page result count (25 recommended, hard cap of 100)                                                                                                     |
+| characteristics                        | object  | Filter by specific LOV characteristic values on the catalog-item.                                                                                       |
+| templateIds                            | array   | Array of type `INTEGER` of template IDs to filter by                                                                                                    |
+| statusIds                              | array   | Array of type `INTEGER` of status IDs to filter by                                                                                                      |
+| rightTemplateIds                       | array   | Array of type `INTEGER` of template IDs of the associated rightsets to filter by                                                                        |
+| includeRecalcStatus                    | boolean | If true, a recalcStatus will be returned with the results. Defaults to false.                                                                           |
+| minWindowDays                          | integer | (Optional) The minimum availability window in days. Defaults to 0 (no minimum).                                                                         |
+| rollupDimId                            | integer | (Optional) The rights dimension to rollup. Must be 1-4.                                                                                                 |
+| scopeDimensions                        | array   | (Optional) Scope the results to specific rights dimensions. Array of type `INTEGER` with values 1 (Media), 2 (Territory), 3 (Language), or 4 (Channel). |
+| scopeExclusivity                       | boolean | (Optional) Scope the results to Exclusivity. Defaults to true (scoped).                                                                                 |
 
 {% hint style="info" %}
 The `rows` parameter has a hard cap of **100**. Values above 100 or less than or equal to 0 will be forced to 100.
@@ -108,7 +112,11 @@ On a successful API call (HTTP Status 200) the following information will be ret
   "characteristics":{
       "genre":["Adventure"]
   },
-  "rightTemplateIds":[2,4]
+  "rightTemplateIds":[2,4],
+  "minWindowDays": 30,
+  "rollupDimId": 2,
+  "scopeDimensions": [1, 2],
+  "scopeExclusivity": true
 }
 ```
 
