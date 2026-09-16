@@ -2,9 +2,13 @@
 
 ## Get availability request
 
-<mark style="color:green;">`POST`</mark> `https://ris.rightsline.com/v4/avails/availability`
+<mark style="color:green;">`POST`</mark> <mark style="color:blue;">`GET`</mark> `https://ris.rightsline.com/v4/avails/availability`
 
 This endpoint returns the availability for the specified catalog-items for the given dimensions.
+
+{% hint style="info" %}
+This endpoint supports both `POST` and `GET` methods. The request body is the same for both.
+{% endhint %}
 
 #### Headers
 
@@ -38,7 +42,9 @@ This endpoint returns the availability for the specified catalog-items for the g
 | rollupDimId                         | integer | (Optional) - The rights dimension to rollup.                                                                                                                  |
 | scopeExclusivity                    | boolean | (Optional) - Scope the results to Exclusivity.                                                                                                                |
 | scopeDimensions                     | array   | (Optional) - Scope the results to specific rights dimensions. Array of type `INTEGER`.                                                                        |
-| rightsActions                       | array   | (Optional) - Return the rights IDs based on these rights action rules.  Array of type `RightsAction`.                                                         |
+| rightsActions                       | array   | (Optional) - Return the rights IDs based on these rights action rules. Array of type `RightsAction`.                                                          |
+| characteristics                     | object  | (Optional) - A key-value object of catalog characteristics that must match. Keys are tag labels, values are string arrays of characteristic values.           |
+| includeAssociatedDealIds            | boolean | (Optional) - If true, each availability row will include an `associatedDealIds` array of deal record IDs associated with the catalog item. Defaults to false. |
 
 {% tabs %}
 {% tab title="200: OK The availability for the requested catalog items." %}
@@ -150,14 +156,14 @@ This endpoint returns the availability for the specified catalog-items for the g
 
 An API call can be made to this endpoint with a JSON body containing the following parameters:
 
-<table><thead><tr><th width="169.62848014605203">Parameter</th><th width="180.33333333333331">Type</th><th width="186">Description</th><th>Required/Optional</th></tr></thead><tbody><tr><td>recordId</td><td>array of numbers</td><td>entity ids</td><td>Required</td></tr><tr><td>dim1</td><td>array of numbers</td><td>Dimension Values</td><td>Optional</td></tr><tr><td>dim2</td><td>array of numbers</td><td>Dimension Values</td><td>Optional</td></tr><tr><td>dim3</td><td>array of numbers</td><td>Dimension Values</td><td>Optional</td></tr><tr><td>dim4</td><td>array of numbers</td><td>Dimension Values</td><td>Optional</td></tr><tr><td>windowStart</td><td>string</td><td>YYYY-MM-DD </td><td>Required</td></tr><tr><td>windowEnd</td><td>string</td><td>YYYY-MM-DD</td><td>Required</td></tr><tr><td>isExclusive</td><td>boolean</td><td>exclusive title flag</td><td>Optional ( defaults to true if not specified )</td></tr><tr><td>matchType</td><td>fixed string values</td><td><p>Valid Values:</p><p>CoverEntire</p><p>OverlapPart</p><p>StartWithin</p><p>EndWithin</p></td><td>Required</td></tr><tr><td>isExact</td><td>boolean</td><td>exact matches</td><td>Optional ( defaults to true if not specified )</td></tr><tr><td>isWindowingEnforced</td><td>boolean</td><td>enforce windowing</td><td>Optional ( defaults to false if not specified )</td></tr><tr><td>showUnavailable</td><td>boolean</td><td>show unavailable avails</td><td>Optional ( defaults to false if not specified )</td></tr><tr><td>start</td><td>number</td><td>start return row ( for pagination )</td><td>Required</td></tr><tr><td>rows</td><td>number</td><td>number of rows to return ( for pagination )</td><td>Required</td></tr><tr><td>truncateDatesToSearch</td><td>boolean</td><td>If true, the windowStart and windowEnd in the response will be truncated to the dates in the request</td><td>Optional ( defaults to false if not specified )</td></tr><tr><td>includeRecalcStatus</td><td>boolean</td><td>If true, a recalcStatus will be returned with the results</td><td>Optional (defaults to false if not specified )</td></tr><tr><td>rightTemplateIds</td><td>array of numbers</td><td>Template IDs of any rights that should be included in the response</td><td>Optional, by default no rights are returned</td></tr><tr><td>includeUserFriendlyDimensionDisplay</td><td>boolean</td><td>If true, a list of each dimension fields will be returned using excluding format if applicable. </td><td>Optional (defaults to false if not specified )</td></tr></tbody></table>
+<table><thead><tr><th width="169.62848014605203">Parameter</th><th width="180.33333333333331">Type</th><th width="186">Description</th><th>Required/Optional</th></tr></thead><tbody><tr><td>recordId</td><td>array of numbers</td><td>entity ids</td><td>Required</td></tr><tr><td>dim1</td><td>array of numbers</td><td>Dimension Values</td><td>Optional</td></tr><tr><td>dim2</td><td>array of numbers</td><td>Dimension Values</td><td>Optional</td></tr><tr><td>dim3</td><td>array of numbers</td><td>Dimension Values</td><td>Optional</td></tr><tr><td>dim4</td><td>array of numbers</td><td>Dimension Values</td><td>Optional</td></tr><tr><td>windowStart</td><td>string</td><td>YYYY-MM-DD</td><td>Required</td></tr><tr><td>windowEnd</td><td>string</td><td>YYYY-MM-DD</td><td>Required</td></tr><tr><td>isExclusive</td><td>boolean</td><td>exclusive title flag</td><td>Optional ( defaults to true if not specified )</td></tr><tr><td>matchType</td><td>fixed string values</td><td><p>Valid Values:</p><p>CoverEntire</p><p>OverlapPart</p><p>StartWithin</p><p>EndWithin</p></td><td>Required</td></tr><tr><td>isExact</td><td>boolean</td><td>exact matches</td><td>Optional ( defaults to true if not specified )</td></tr><tr><td>isWindowingEnforced</td><td>boolean</td><td>enforce windowing</td><td>Optional ( defaults to false if not specified )</td></tr><tr><td>showUnavailable</td><td>boolean</td><td>show unavailable avails</td><td>Optional ( defaults to false if not specified )</td></tr><tr><td>start</td><td>number</td><td>start return row ( for pagination )</td><td>Required</td></tr><tr><td>rows</td><td>number</td><td>number of rows to return ( for pagination )</td><td>Required</td></tr><tr><td>truncateDatesToSearch</td><td>boolean</td><td>If true, the windowStart and windowEnd in the response will be truncated to the dates in the request</td><td>Optional ( defaults to false if not specified )</td></tr><tr><td>includeRecalcStatus</td><td>boolean</td><td>If true, a recalcStatus will be returned with the results</td><td>Optional (defaults to false if not specified )</td></tr><tr><td>rightTemplateIds</td><td>array of numbers</td><td>Template IDs of any rights that should be included in the response</td><td>Optional, by default no rights are returned</td></tr><tr><td>includeUserFriendlyDimensionDisplay</td><td>boolean</td><td>If true, a list of each dimension fields will be returned using excluding format if applicable.</td><td>Optional (defaults to false if not specified )</td></tr><tr><td>characteristics</td><td>Map&#x3C;string, string[]></td><td>A key-value object of catalog characteristics that must match. Keys are tag labels, values are string arrays of characteristic values.</td><td>Optional</td></tr><tr><td>includeAssociatedDealIds</td><td>boolean</td><td>If true, each availability row will include an associatedDealIds array containing the record IDs of deals associated with the catalog item.</td><td>Optional (defaults to false if not specified)</td></tr></tbody></table>
 
 'IncludeUserFriendlyDimensionDisplay': Setting this parameter to true will return additional properties for the dimension data in a general string that will use exclusion logic if that string is shorter than just displaying the list of included items.
 
-* Media example: “All Media Excluding: SVOD”
-* Territory example: “Worldwide Excluding: France | Italy | Spain ”
-* Language example: “English (US)”
-* 4th Dimension, if hierarchical (Channel):“Amazon | Apple TV | Google Play | VUDU”
+* Media example: "All Media Excluding: SVOD"
+* Territory example: "Worldwide Excluding: France | Italy | Spain "
+* Language example: "English (US)"
+* 4th Dimension, if hierarchical (Channel):"Amazon | Apple TV | Google Play | VUDU"
 
 ## Example API request
 
@@ -178,6 +184,10 @@ An API call can be made to this endpoint with a JSON body containing the followi
   "start": 0,   
   "rows": 25,
   "includeUserFriendlyDimensionDisplay": true,
+  "includeAssociatedDealIds": true,
+  "characteristics": {
+      "genre": ["Adventure"]
+  },
   "rightsActions":[
     {
         "reasonUnavailable": "RightsOutExist",
@@ -193,46 +203,39 @@ An API call can be made to this endpoint with a JSON body containing the followi
 
 On a successful API call ( HTTP Status 200 ) the following information will be returned:
 
-<table><thead><tr><th>Parameter</th><th width="151.33333333333331">Type</th><th>Description</th></tr></thead><tbody><tr><td>invalidRecordIds</td><td>int[]</td><td>A list of catalog item IDs from the request that are invalid. The catalog either does not exist or the API user does not have access to it.</td></tr><tr><td>rowCount</td><td>int</td><td>number of rows returned</td></tr><tr><td>rows</td><td>array of availability objects ( see table below)</td><td>availability data</td></tr><tr><td>recalcStatus</td><td>string</td><td>Only returned if includeRecalc = true in the request. Returns 'calculating' If a recalculation of availabilities is currently underway, 'paused' if that recalculation has been paused, and 'calculated' if availability calculations are up to date.</td></tr><tr><td>rights</td><td>array of right objects</td><td>Distinct list of all rights involved in the availabilities returned. Only returned if rightTemplateIDs were provided in the request.</td></tr></tbody></table>
-
-
+<table><thead><tr><th>Parameter</th><th width="151.33333333333331">Type</th><th>Description</th></tr></thead><tbody><tr><td>invalidRecordIds</td><td>int[]</td><td>A list of catalog item IDs from the request that are invalid. The catalog either does not exist or the API user does not have access to it.</td></tr><tr><td>rowCount</td><td>int</td><td>number of rows returned</td></tr><tr><td>rows</td><td>array of availability objects ( see table below)</td><td>availability data</td></tr><tr><td>recalcStatus</td><td>string</td><td>Only returned if <code>includeRecalcStatus</code> = true in the request. Returns <code>Calculating</code> if a recalculation of availabilities is currently underway, <code>Paused</code> if that recalculation has been paused, <code>Calculated</code> if availability calculations are up to date, or <code>Inactive</code> if avails calculation is not active for this division.</td></tr><tr><td>rights</td><td>array of right objects</td><td>Distinct list of all rights involved in the availabilities returned. Only returned if rightTemplateIDs were provided in the request.</td></tr></tbody></table>
 
 ### **Availability object**
 
-| Parameter          | Type                                        | Description                                                                                                           |
-| ------------------ | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| LastUpdatedDate    | string                                      | Last update date / time                                                                                               |
-| Template           | template data ( see table below )           | Template data structure                                                                                               |
-| Status             | status data ( see table below )             | Status data structure                                                                                                 |
-| WindowStart        | YYYY-MM-DD                                  | Start window date                                                                                                     |
-| WindowEnd          | YYYY-MM-DD                                  | End window date                                                                                                       |
-| Dim1               | array of char data data ( see table below ) | Dimension 1 data                                                                                                      |
-| Dim2               | array of char data ( see table below )      | Dimension 2 data                                                                                                      |
-| Dim3               | array of char data ( see table below )      | Dimension 3 data                                                                                                      |
-| Dim4               | array of char data ( see table below )      | Dimension 4 data                                                                                                      |
-| IsExclusive        | bool                                        | Flag for exclusivity                                                                                                  |
-| IsExact            | bool                                        | Flag for exact match                                                                                                  |
-| Available          | string                                      | Available status                                                                                                      |
-| ReasonUnavailable  | string                                      | Reason if unavailable                                                                                                 |
-| associatedRightIds | int\[]                                      | Specific rights involved in this availability result. Only returned if rightTemplateIDs were provided in the request. |
-| dim1Display        | string                                      | Dimension 1 data using excluding format if applicable.                                                                |
-| dim2Display        | string                                      | Dimension 2 data using excluding format if applicable.                                                                |
-| dim3Display        | string                                      | Dimension 3 data using excluding format if applicable.                                                                |
-| dim4Display        | string                                      | Dimension 4 data using excluding format if applicable.                                                                |
-
-
+| Parameter          | Type                                        | Description                                                                                                                   |
+| ------------------ | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| LastUpdatedDate    | string                                      | Last update date / time                                                                                                       |
+| Template           | template data ( see table below )           | Template data structure                                                                                                       |
+| Status             | status data ( see table below )             | Status data structure                                                                                                         |
+| WindowStart        | YYYY-MM-DD                                  | Start window date                                                                                                             |
+| WindowEnd          | YYYY-MM-DD                                  | End window date                                                                                                               |
+| Dim1               | array of char data data ( see table below ) | Dimension 1 data                                                                                                              |
+| Dim2               | array of char data ( see table below )      | Dimension 2 data                                                                                                              |
+| Dim3               | array of char data ( see table below )      | Dimension 3 data                                                                                                              |
+| Dim4               | array of char data ( see table below )      | Dimension 4 data                                                                                                              |
+| IsExclusive        | bool                                        | Flag for exclusivity                                                                                                          |
+| IsExact            | bool                                        | Flag for exact match                                                                                                          |
+| Available          | string                                      | Available status                                                                                                              |
+| ReasonUnavailable  | string                                      | Reason if unavailable                                                                                                         |
+| associatedRightIds | int\[]                                      | Specific rights involved in this availability result. Only returned if rightTemplateIDs were provided in the request.         |
+| associatedDealIds  | int\[]                                      | Deal record IDs associated with the catalog item. Only returned if `includeAssociatedDealIds` was set to true in the request. |
+| dim1Display        | string                                      | Dimension 1 data using excluding format if applicable.                                                                        |
+| dim2Display        | string                                      | Dimension 2 data using excluding format if applicable.                                                                        |
+| dim3Display        | string                                      | Dimension 3 data using excluding format if applicable.                                                                        |
+| dim4Display        | string                                      | Dimension 4 data using excluding format if applicable.                                                                        |
 
 ### Entity template object
 
 <table><thead><tr><th>Parameter</th><th width="151.33333333333331">Type</th><th>Description</th></tr></thead><tbody><tr><td>templateId</td><td>number</td><td>Template identifier</td></tr><tr><td>templateName</td><td>string</td><td>Template name</td></tr><tr><td>processId</td><td>number</td><td>Process identifier</td></tr><tr><td>processName</td><td>string</td><td>Process name</td></tr></tbody></table>
 
-
-
 ### **Entity status object**
 
 <table><thead><tr><th>Parameter</th><th width="151.33333333333331">Type</th><th>Description</th></tr></thead><tbody><tr><td>statusId</td><td>number</td><td>Status identifier</td></tr><tr><td>statusName</td><td>string</td><td>Status name</td></tr></tbody></table>
-
-
 
 ### **Dimension data object**
 
@@ -242,16 +245,14 @@ On a successful API call ( HTTP Status 200 ) the following information will be r
 | value     | string | Dimension Value                 |
 | xref      | string | Dimension Cross Reference Value |
 
-
-
 ### Rights action object
 
-| Parameter                | Type    | Description                                                                                        |
-| ------------------------ | ------- | -------------------------------------------------------------------------------------------------- |
-| reasonUnavailable        | string  | The reason unavailable. Possible values can be found [here](../avails-reason-unavailable-list.md). |
-| rightsActionsTemplateIds | array   | Array of type `INTEGER` to filter results by right template ID.                                    |
-| showDimensionLimitation  | boolean | Show the dimension limitation in the result.                                                       |
-| showTermLimitation       | boolean | Show the term limitation in the result.                                                            |
+| Parameter                | Type    | Description                                                     |
+| ------------------------ | ------- | --------------------------------------------------------------- |
+| reasonUnavailable        | string  | The reason unavailable. Possible values can be found here.      |
+| rightsActionsTemplateIds | array   | Array of type `INTEGER` to filter results by right template ID. |
+| showDimensionLimitation  | boolean | Show the dimension limitation in the result.                    |
+| showTermLimitation       | boolean | Show the term limitation in the result.                         |
 
 ## Example API response
 
@@ -277,47 +278,47 @@ On a successful API call ( HTTP Status 200 ) the following information will be r
       "dim1": [
         {
            "id": 7,
-           "value": "Free TV"
+           "value": "Free TV",
            "xref": null
         },
         {
             "id": 10,
-            "value": "Theatrical"
+            "value": "Theatrical",
             "xref": null
         },
         {
             "id": 18,
-            "value": "Hotels"
+            "value": "Hotels",
             "xref": null
         },
         {
             "id": 51,
-            "value": "Non-Theatrical / Public Video"
+            "value": "Non-Theatrical / Public Video",
             "xref": null
         },
         {
             "id": 52,
-            "value": "Pay Per View"
+            "value": "Pay Per View",
             "xref": null
         },
         {
             "id": 53,
-            "value": "Pay TV"
+            "value": "Pay TV",
             "xref": null
         },
         {
             "id": 54,
-            "value": "VOD"
+            "value": "VOD",
             "xref": null
         },
         {
             "id": 59,
-            "value": "Derivative/Ancillary"
+            "value": "Derivative/Ancillary",
             "xref": null
        },
        {
             "id": 60,
-            "value": "Other"
+            "value": "Other",
             "xref": null
         }
       ],
@@ -345,6 +346,7 @@ On a successful API call ( HTTP Status 200 ) the following information will be r
       "matchType": "CoverEntire",
       "available": "Partially",
       "rightsActions": [125],
+      "associatedDealIds": [500, 501],
       "reasonUnavailable": "Limited (Term)",
       "id": 36816,
       "title": "title"
@@ -352,4 +354,3 @@ On a successful API call ( HTTP Status 200 ) the following information will be r
   ]
 }
 ```
-

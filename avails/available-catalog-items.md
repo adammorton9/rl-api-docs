@@ -27,12 +27,16 @@ This endpoint returns the availability for the specified catalog-items for the g
 | isExact                                | boolean | True for if the window dates should match exactly, False for flexible            |
 | isExclusive                            | boolean | True for Exclusive, False for Non-Exclusive, null for no value                   |
 | start                                  | string  | Record count start (0-based index)                                               |
-| rows                                   | integer | Page result count (25 recommended)                                               |
+| rows                                   | integer | Page result count (25 recommended, hard cap of 100)                              |
 | characteristics                        | object  | Filter by specific LOV characteristic values on the catalog-item.                |
 | templateIds                            | array   | Array of type `INTEGER` of template IDs to filter by                             |
 | statusIds                              | array   | Array of type `INTEGER` of status IDs to filter by                               |
 | rightTemplateIds                       | array   | Array of type `INTEGER` of template IDs of the associated rightsets to filter by |
 | includeRecalcStatus                    | boolean | If true, a recalcStatus will be returned with the results. Defaults to false.    |
+
+{% hint style="info" %}
+The `rows` parameter has a hard cap of **100**. Values above 100 or less than or equal to 0 will be forced to 100.
+{% endhint %}
 
 {% tabs %}
 {% tab title="200 The availability for the requested catalog items." %}
@@ -74,6 +78,16 @@ This endpoint returns the availability for the specified catalog-items for the g
 {% endtab %}
 {% endtabs %}
 
+### Response object
+
+On a successful API call (HTTP Status 200) the following information will be returned:
+
+| Parameter    | Type                                            | Description                                                                                                                                                                                             |
+| ------------ | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| rowCount     | int                                             | Number of rows returned                                                                                                                                                                                 |
+| rows         | array of catalog item objects (see table below) | Available catalog items                                                                                                                                                                                 |
+| recalcStatus | string                                          | Only returned if `includeRecalcStatus` = true. Returns `Calculating` if a recalculation is underway, `Paused` if paused, `Calculated` if up to date, or `Inactive` if avails calculation is not active. |
+
 ### Example API request body
 
 ```json
@@ -99,7 +113,7 @@ This endpoint returns the availability for the specified catalog-items for the g
 ```
 
 {% hint style="info" %}
-The characteristics field allows you to filter the catalog items in the response that contain a specific value or group of values for a given characteristic.  In the example request above, only catalog items that have a genre value of Adventure will be returned in the response.
+The characteristics field allows you to filter the catalog items in the response that contain a specific value or group of values for a given characteristic. In the example request above, only catalog items that have a genre value of Adventure will be returned in the response.
 {% endhint %}
 
 ### Example API response

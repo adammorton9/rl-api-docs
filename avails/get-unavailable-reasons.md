@@ -2,7 +2,7 @@
 
 ## Get reason unavailable list
 
-<mark style="color:blue;">`GET`</mark> `https://ris.rightsline.com/v4/avails/dimension-data`
+<mark style="color:blue;">`GET`</mark> `https://ris.rightsline.com/v4/avails/reason-unavailable-list`
 
 Retrieve the list of possible unavailable reasons for Rights Actions.
 
